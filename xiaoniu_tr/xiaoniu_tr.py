@@ -123,7 +123,7 @@ def xiaoniu_tr(
         'apikey': APIKEY,
     }
 
-    # is it first 1000 access?
+    # is it the first EXEMPTED calls?
     try:
         xiaoniu_tr.counter += 1  # type: ignore
     except Exception:

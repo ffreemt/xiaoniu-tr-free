@@ -1,9 +1,9 @@
 # xiaoniu-tr-free
 
-xiaoniu translate for free -- local cache plus throttling (1.5 calls/s from 501st call on). Let's hope it lasts.
+xiaoniu translate for free -- local cache plus throttling (1.5 calls/s from 201st call on). Let's hope it lasts.
 
 ### Installation
-``` pip install xiaoniu-tr-free -U```
+``` pip install -U xiaoniu-tr-free```
 
 or
 * Install (pip or whatever) necessary requirements, e.g. ```
