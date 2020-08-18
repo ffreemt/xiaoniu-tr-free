@@ -41,17 +41,19 @@ HEADERS = {
     "User-Agent": UA,
     'Referer': REFERER,
 }
-HEADERS = {'Connection': 'keep-alive',
- 'Accept': 'application/json, text/plain, */*',
- 'User-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36',
- 'Dnt': '1',
- 'Origin': 'https://niutrans.com',
- 'Sec-fetch-site': 'same-site',
- 'Sec-fetch-mode': 'cors',
- 'Sec-fetch-dest': 'empty',
- 'Referer': 'https://niutrans.com/Trans',
- 'Accept-encoding': 'gzip, deflate, br',
- 'Accept-language': 'zh-CN,zh;q=0.9,en;q=0.8'}
+HEADERS = {
+    'Connection': 'keep-alive',
+    'Accept': 'application/json, text/plain, */*',
+    'User-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36',
+    'Dnt': '1',
+    'Origin': 'https://niutrans.com',
+    'Sec-fetch-site': 'same-site',
+    'Sec-fetch-mode': 'cors',
+    'Sec-fetch-dest': 'empty',
+    'Referer': 'https://niutrans.com/Trans',
+    'Accept-encoding': 'gzip, deflate, br',
+    'Accept-language': 'zh-CN,zh;q=0.9,en;q=0.8'
+}
 
 # APIKEY = "918b7750dab1c9ec418dce28542d707a"
 
@@ -182,10 +184,11 @@ def xiaoniu_tr(
         resp = requests.models.Response()
         resp._content = f'{{"errorCode": "{exc}"}}'.encode()
         resp.status_code = 499
+
     try:
         jdata = resp.json()
     except Exception as exc:
-        jdata = {'error_msg': str(resp)}
+        jdata = {'error_msg': str(exc)}
     finally:
         resu = jdata.get('tgt_text')
 
