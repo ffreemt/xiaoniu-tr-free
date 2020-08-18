@@ -1,8 +1,10 @@
-# xiaoniu-tr-free
+# xiaoniu-tr-free [![PyPI version](https://badge.fury.io/py/xiaoniu-tr-free.svg)](https://badge.fury.io/py/xiaoniu-tr-free)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 xiaoniu translate for free -- local cache plus throttling (1.5 calls/s from 201st call on). Let's hope it lasts.
 
-### Update: fix query=50980349 and source="text", resort to use get
+### Update
+
+version 0.0.3, fix query=50980349 and source="text", resort to use requests.get
 
 ### Installation
 ``` pip install -U xiaoniu-tr-free```
@@ -13,7 +15,7 @@ pip install requests_cache langid``` or ```
 pip install -r requirements.txt```
 * Drop the file xiaoniu_tr.py in any folder in your PYTHONPATH (check with import sys; print(sys.path)
 * or clone the repo (e.g., ```git clone https://github.com/ffreemt/xiaoniu-tr-free.git``` or download https://github.com/ffreemt/xiaoniu-tr-free/archive/master.zip and unzip) and change to the xiaoniu-tr-free folder and do a ```
-python setup.py develop```
+python setup.py develop``` or `pip install -e .`
 
 ### Usage
 
