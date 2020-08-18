@@ -11,8 +11,11 @@ from time import sleep, time
 from random import random, randint
 from typing import Tuple
 
+from urllib.parse import urlencode
+import requests
 import requests_cache  # type: ignore
-import langid  # type: ignore
+# import langid  # type: ignore
+from langid import classify  # type: ignore
 
 LOGGER = logging.getLogger(__name__)
 LOGGER.addHandler(logging.NullHandler())
@@ -38,6 +41,18 @@ HEADERS = {
     "User-Agent": UA,
     'Referer': REFERER,
 }
+HEADERS = {'Connection': 'keep-alive',
+ 'Accept': 'application/json, text/plain, */*',
+ 'User-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36',
+ 'Dnt': '1',
+ 'Origin': 'https://niutrans.com',
+ 'Sec-fetch-site': 'same-site',
+ 'Sec-fetch-mode': 'cors',
+ 'Sec-fetch-dest': 'empty',
+ 'Referer': 'https://niutrans.com/Trans',
+ 'Accept-encoding': 'gzip, deflate, br',
+ 'Accept-language': 'zh-CN,zh;q=0.9,en;q=0.8'}
+
 # APIKEY = "918b7750dab1c9ec418dce28542d707a"
 
 SESS = requests_cache.CachedSession(
@@ -98,11 +113,11 @@ def xiaoniu_tr(
     >>> xiaoniu_tr('test')
     '测试'
     >>> xiaoniu_tr('Good morning', to_lang='de')
-    'Guten Morgen, wow'
+    'Guten Morgen'
     >>> xiaoniu_tr('hello world', to_lang='fr')
     'Bonjour le monde'
     >>> xiaoniu_tr('hello world', to_lang='ru')
-    'Привет, ад мира'
+    'Привет, мир'
     >>> xiaoniu_tr('hello world', to_lang='ja')
     'こんにちは世界'
     '''
@@ -111,7 +126,8 @@ def xiaoniu_tr(
     to_lang = to_lang.lower()
 
     if from_lang in ['auto']:
-        from_lang = langid.classify(query)[0]
+        # from_lang = langid.classify(query)[0]
+        from_lang = classify(query)[0]
     if from_lang == to_lang:
         xiaoniu_tr.json = {'msg': 'from_lang == to_lang, nothing to do'}  # type: ignore  # NOQA
         return query
@@ -119,11 +135,13 @@ def xiaoniu_tr(
     # tick = round(time() * 1000)
     # will spoil cache
     data = {
+        "query": 50980349,
+        "source": "text",
         'from': from_lang,
         'to': to_lang,
         'src_text': query,
         # 't': tick,
-        'apikey': APIKEY,
+        # 'apikey': APIKEY,
     }
 
     # is it the first EXEMPTED calls?
@@ -145,16 +163,25 @@ def xiaoniu_tr(
             sess = SESS
 
     try:
+        _ = """  # for some weird reason, post returns incoheret results
         resp = sess.post(
             URL,
             data=data,
             headers=HEADERS,
             timeout=timeout,
         )
+        # """
+        resp = sess.get(
+            f"{URL}?{urlencode(data)}",
+            headers=HEADERS,
+            timeout=timeout,
+        )
     except Exception as exc:
         LOGGER.error(exc)
-        resp = exc
-
+        # resp.json = {"error_msg": str(exc)}
+        resp = requests.models.Response()
+        resp._content = f'{{"errorCode": "{exc}"}}'.encode()
+        resp.status_code = 499
     try:
         jdata = resp.json()
     except Exception as exc:

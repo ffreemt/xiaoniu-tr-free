@@ -2,6 +2,8 @@
 
 xiaoniu translate for free -- local cache plus throttling (1.5 calls/s from 201st call on). Let's hope it lasts.
 
+### Update: fix query=50980349 and source="text", resort to use get
+
 ### Installation
 ``` pip install -U xiaoniu-tr-free```
 
