@@ -26,8 +26,11 @@ CACHE_NAME = (Path(HOME_FOLDER) / (Path(__file__)).stem).as_posix()
 EXPIRE_AFTER = 36000
 
 URL0 = "https://test.niutrans.vip"
+URL0 = "https://niutrans.com/Trans"
 REFERER = 'https://niutrans.vip/console/textTrans'
 URL = 'http://api.niutrans.vip/NiuTransServer/translation'
+URL = 'https://test.niutrans.com/NiuTransServer/testtrans'
+
 
 UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17'  # NOQA
 HEADERS = {
@@ -35,7 +38,7 @@ HEADERS = {
     "User-Agent": UA,
     'Referer': REFERER,
 }
-APIKEY = "918b7750dab1c9ec418dce28542d707a"
+# APIKEY = "918b7750dab1c9ec418dce28542d707a"
 
 SESS = requests_cache.CachedSession(
     cache_name=CACHE_NAME,
